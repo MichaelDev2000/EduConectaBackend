@@ -4,7 +4,6 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 import java.util.Date;
 import java.sql.Timestamp;
-import java.util.List;
 
 
 /**
@@ -24,6 +23,9 @@ public class Publicacion implements Serializable {
 	@Column(name="created_at")
 	private Timestamp createdAt;
 
+	@Column(name="grupo_id")
+	private String grupoId;
+
 	@Column(name="post_contenido")
 	private String postContenido;
 
@@ -35,28 +37,13 @@ public class Publicacion implements Serializable {
 	@Column(name="updated_at")
 	private Date updatedAt;
 
-	//bi-directional many-to-one association to Comentario
-	@OneToMany(mappedBy="publicacione")
-	private List<Comentario> comentarios;
-
-	//bi-directional many-to-one association to Like
-	@OneToMany(mappedBy="publicacione")
-	private List<Like> likes;
+	@Column(name="usuario_id")
+	private String usuarioId;
 
 	//bi-directional many-to-one association to Temaacademico
 	@ManyToOne
 	@JoinColumn(name="tema_id")
 	private Temaacademico temasacademico;
-
-	//bi-directional many-to-one association to Usuario
-	@ManyToOne
-	@JoinColumn(name="usuario_id")
-	private Usuario usuario;
-
-	//bi-directional many-to-one association to Grupo
-	@ManyToOne
-	@JoinColumn(name="grupo_id")
-	private Grupo grupo;
 
 	public Publicacion() {
 	}
@@ -75,6 +62,14 @@ public class Publicacion implements Serializable {
 
 	public void setCreatedAt(Timestamp createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public String getGrupoId() {
+		return this.grupoId;
+	}
+
+	public void setGrupoId(String grupoId) {
+		this.grupoId = grupoId;
 	}
 
 	public String getPostContenido() {
@@ -101,48 +96,12 @@ public class Publicacion implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public List<Comentario> getComentarios() {
-		return this.comentarios;
+	public String getUsuarioId() {
+		return this.usuarioId;
 	}
 
-	public void setComentarios(List<Comentario> comentarios) {
-		this.comentarios = comentarios;
-	}
-
-	public Comentario addComentario(Comentario comentario) {
-		getComentarios().add(comentario);
-		comentario.setPublicacione(this);
-
-		return comentario;
-	}
-
-	public Comentario removeComentario(Comentario comentario) {
-		getComentarios().remove(comentario);
-		comentario.setPublicacione(null);
-
-		return comentario;
-	}
-
-	public List<Like> getLikes() {
-		return this.likes;
-	}
-
-	public void setLikes(List<Like> likes) {
-		this.likes = likes;
-	}
-
-	public Like addLike(Like like) {
-		getLikes().add(like);
-		like.setPublicacione(this);
-
-		return like;
-	}
-
-	public Like removeLike(Like like) {
-		getLikes().remove(like);
-		like.setPublicacione(null);
-
-		return like;
+	public void setUsuarioId(String usuarioId) {
+		this.usuarioId = usuarioId;
 	}
 
 	public Temaacademico getTemasacademico() {
@@ -151,22 +110,6 @@ public class Publicacion implements Serializable {
 
 	public void setTemasacademico(Temaacademico temasacademico) {
 		this.temasacademico = temasacademico;
-	}
-
-	public Usuario getUsuario() {
-		return this.usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public Grupo getGrupo() {
-		return this.grupo;
-	}
-
-	public void setGrupo(Grupo grupo) {
-		this.grupo = grupo;
 	}
 
 }
